@@ -1,3 +1,5 @@
+import unittest
+
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 
@@ -23,9 +25,11 @@ class TestNews(TestCase):
         cls.user_client = Client()
         cls.user_client.force_login(cls.user)
 
+    @unittest.skip('Тест - проба пера')
     def test_successful_creation(self):
         news_count = News.objects.count()
         self.assertEqual(news_count, 1)
 
+    @unittest.skip('Тест - проба пера')
     def test_title(self):
         self.assertEqual(self.news.title, self.TITLE)
