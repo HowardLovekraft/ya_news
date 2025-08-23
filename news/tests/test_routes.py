@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 
@@ -53,11 +54,10 @@ class TestRoutes(TestCase):
                     self.assertEqual(response.status_code, status)
 
     def test_redirect_for_anonymous_client(self):
-        login_url = reverse('users:login')
 
         for name in ('news:edit', 'news:delete'):
             with self.subTest(name=name):
                 url = reverse(name, args=(self.comment.id,))
-                redirect_url = f'{login_url}?next={url}'
+                redirect_url = f'{settings.LOGIN_URL}?next={url}'
                 response = self.client.get(url)
                 self.assertRedirects(response, redirect_url)
